@@ -22,16 +22,23 @@ const LoginScreen: FC = () => {
 
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.user.isLoading);
+
   useEffect(() => {
     if (isValidEmail(email)) {
       setEmailIsValid(true);
     } else setEmailIsValid(false);
   }, [email]);
+
   useEffect(() => {
-    if (isValidPassword(email)) {
+    if (isValidPassword(password)) {
       setPasswordIsValid(true);
     } else setPasswordIsValid(false);
   }, [password]);
+
+  const Login = () => {
+    if (!(emailIsValid && passwordIsValid)) return;
+    dispatch(loadUser(safeEmail(email), password));
+  };
   return (
     <KeyboardAwareScrollView
       style={[commonStyles.flexOne, commonStyles.alignSelfCenter]}
@@ -47,7 +54,8 @@ const LoginScreen: FC = () => {
               onChangeText={(email) => setEmail(email)}
               placeholder="Email address"
             />
-            {emailIsValid && <Text>{EMAIL_VALIDATION_ERROR}</Text>}
+
+            {!emailIsValid && <Text>{EMAIL_VALIDATION_ERROR}</Text>}
           </View>
           <View style={commonStyles.generalPadding}>
             <TextInput
@@ -55,14 +63,14 @@ const LoginScreen: FC = () => {
               onChangeText={(password) => setPassword(password)}
               placeholder="Password"
             />
-            {passwordIsValid && <Text>{PASSWORD_VALIDATION_ERROR}</Text>}
+            {!passwordIsValid && <Text>{PASSWORD_VALIDATION_ERROR}</Text>}
           </View>
 
           <View>
             {!isLoading ? (
               <Button
                 onPress={() => {
-                  dispatch(loadUser(safeEmail(email), password));
+                  Login();
                 }}
               >
                 Login
