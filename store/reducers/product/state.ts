@@ -16,3 +16,4 @@ export const initialState: State = {
   productList: [],
   billingState: { name: "AL", tax: 4 },
 };
+const statesList = ["AL", "TA"];

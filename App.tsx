@@ -5,8 +5,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import configureStore from "./store/store";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
-
- 
 import Navigation from "./navigation";
 import { Provider } from "react-redux";
 

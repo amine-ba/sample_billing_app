@@ -19,8 +19,9 @@ export const deleteProduct = () => {
   };
 };
 
-export const updateState = () => {
+export const updateState = (state: any) => {
   return {
     type: UPDATE_BILLING_STATE,
+    data: state,
   };
 };

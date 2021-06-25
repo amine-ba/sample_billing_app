@@ -7,17 +7,54 @@ import * as Random from "expo-random";
 import { Text, View } from "../../components/Themed";
 import { commonStyles } from "../commonStyle";
 import { useDispatch } from "react-redux";
-import { addProduct } from "./../../store/actions/product";
+import { addProduct, updateState } from "./../../store/actions/product";
+import { Picker } from "@react-native-picker/picker";
+
 export default function TabOneScreen() {
   const [label, setLabel] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [quantity, setQuantity] = useState<string>("");
-
+  const [selectedState, setSelectedState] = useState(0);
+  const [pickerVisible, setPickerVisible] = useState(false);
   const dispatch = useDispatch();
-
+  const statesList = [
+    { name: "LA", tax: "4" },
+    { name: "TA", tax: "5" },
+  ];
   return (
     <View>
-      <Text style={styles.title}>Tab One</Text>
+      <View
+        style={[
+          {
+            flexDirection: "row",
+            alignItems: "center",
+          },
+          commonStyles.fullWidth,
+        ]}
+      >
+        <Text style={[styles.title, { textAlign: "left" }]}>Add Product</Text>
+        <Text
+          style={[
+            styles.title,
+            commonStyles.fullWidth,
+            { textAlign: "right", position: "absolute" },
+          ]}
+        >
+          State Selected {statesList[selectedState].name}
+        </Text>
+      </View>
+
+      <Picker
+        selectedValue={selectedState}
+        onValueChange={(itemValue, itemIndex) => {
+          setSelectedState(itemIndex);
+          dispatch(updateState(statesList[itemIndex]));
+        }}
+      >
+        {statesList.map((state, index) => (
+          <Picker.Item label={state.name} value={index} />
+        ))}
+      </Picker>
       <View style={commonStyles.fullWidth}></View>
       <TextInput
         value={label}
@@ -39,8 +76,8 @@ export default function TabOneScreen() {
           dispatch(
             addProduct({
               id: JSON.stringify(Random.getRandomBytes(10)),
-              price: parseInt(price),
-              No: parseInt(quantity),
+              price: parseInt(price, 10),
+              No: parseInt(quantity, 10),
               name: label,
             })
           );
