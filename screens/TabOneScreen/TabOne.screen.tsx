@@ -22,58 +22,56 @@ export default function TabOneScreen() {
     { name: "TA", tax: "5" },
   ];
   return (
-    <View>
-      <View
-        style={[
-          {
-            flexDirection: "row",
-            alignItems: "center",
-          },
-          commonStyles.fullWidth,
-        ]}
-      >
-        <Text style={[styles.title, { textAlign: "left" }]}>Add Product</Text>
+    <View style={{ width: "95%", alignSelf: "center" }}>
+      <View style={[commonStyles.flexRow, commonStyles.fullWidth]}>
+        <Text style={[styles.title]}>Add Product</Text>
         <Text
           style={[
             styles.title,
             commonStyles.fullWidth,
-            { textAlign: "right", position: "absolute" },
+            commonStyles.alignTextRight,
           ]}
         >
           State Selected {statesList[selectedState].name}
         </Text>
       </View>
+      <View style={commonStyles.generalPadding}>
+        <TextInput
+          value={label}
+          onChangeText={(label) => setLabel(label)}
+          placeholder="Enter Product Label"
+        />
+      </View>
+      <View style={[commonStyles.flexRow, commonStyles.generalPadding]}>
+        <TextInput
+          style={commonStyles.generalHorizontalPadding}
+          value={price}
+          onChangeText={(price) => setPrice(price)}
+          placeholder="Enter Price "
+        />
+        <TextInput
+          style={commonStyles.generalHorizontalPadding}
+          value={quantity}
+          onChangeText={(quantity) => setQuantity(quantity)}
+          placeholder="Enter Quantity"
+        />
+        <Button
+          style={commonStyles.generalHorizontalPadding}
+          onPress={() => {
+            dispatch(
+              addProduct({
+                id: JSON.stringify(Random.getRandomBytes(10)),
+                price: parseInt(price, 10),
+                No: parseInt(quantity, 10),
+                name: label,
+              })
+            );
+          }}
+        >
+          Add to list
+        </Button>
+      </View>
 
-      <View style={commonStyles.fullWidth}></View>
-      <TextInput
-        value={label}
-        onChangeText={(label) => setLabel(label)}
-        placeholder="Enter Product Label"
-      />
-      <TextInput
-        value={price}
-        onChangeText={(price) => setPrice(price)}
-        placeholder="Enter Price "
-      />
-      <TextInput
-        value={quantity}
-        onChangeText={(quantity) => setQuantity(quantity)}
-        placeholder="Enter Quantity"
-      />
-      <Button
-        onPress={() => {
-          dispatch(
-            addProduct({
-              id: JSON.stringify(Random.getRandomBytes(10)),
-              price: parseInt(price, 10),
-              No: parseInt(quantity, 10),
-              name: label,
-            })
-          );
-        }}
-      >
-        Add to list
-      </Button>
       <Picker
         selectedValue={selectedState}
         onValueChange={(itemValue, itemIndex) => {

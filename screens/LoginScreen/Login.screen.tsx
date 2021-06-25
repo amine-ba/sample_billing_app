@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { commonStyles } from "../commonStyle";
@@ -16,10 +16,22 @@ import {
 } from "./utils/validations";
 const LoginScreen: FC = () => {
   const [email, setEmail] = useState("");
+  const [emailIsValid, setEmailIsValid] = useState(true);
   const [password, setPassword] = useState("");
+  const [passwordIsValid, setPasswordIsValid] = useState(true);
+
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.user.isLoading);
-
+  useEffect(() => {
+    if (isValidEmail(email)) {
+      setEmailIsValid(true);
+    } else setEmailIsValid(false);
+  }, [email]);
+  useEffect(() => {
+    if (isValidPassword(email)) {
+      setPasswordIsValid(true);
+    } else setPasswordIsValid(false);
+  }, [password]);
   return (
     <KeyboardAwareScrollView
       style={[commonStyles.flexOne, commonStyles.alignSelfCenter]}
@@ -35,7 +47,7 @@ const LoginScreen: FC = () => {
               onChangeText={(email) => setEmail(email)}
               placeholder="Email address"
             />
-            {!isValidEmail(email) && <Text>{EMAIL_VALIDATION_ERROR}</Text>}
+            {emailIsValid && <Text>{EMAIL_VALIDATION_ERROR}</Text>}
           </View>
           <View style={commonStyles.generalPadding}>
             <TextInput
@@ -43,9 +55,7 @@ const LoginScreen: FC = () => {
               onChangeText={(password) => setPassword(password)}
               placeholder="Password"
             />
-            {!isValidPassword(password) && (
-              <Text>{PASSWORD_VALIDATION_ERROR}</Text>
-            )}
+            {passwordIsValid && <Text>{PASSWORD_VALIDATION_ERROR}</Text>}
           </View>
 
           <View>
