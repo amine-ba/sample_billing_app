@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import { Button } from "react-native-paper";
 import * as Random from "expo-random";
-
+import TextInput from "./../../components/TextInput";
 import { Text, View } from "../../components/Themed";
 import { commonStyles } from "../commonStyle";
 import { useDispatch } from "react-redux";
@@ -44,17 +44,6 @@ export default function TabOneScreen() {
         </Text>
       </View>
 
-      <Picker
-        selectedValue={selectedState}
-        onValueChange={(itemValue, itemIndex) => {
-          setSelectedState(itemIndex);
-          dispatch(updateState(statesList[itemIndex]));
-        }}
-      >
-        {statesList.map((state, index) => (
-          <Picker.Item label={state.name} value={index} />
-        ))}
-      </Picker>
       <View style={commonStyles.fullWidth}></View>
       <TextInput
         value={label}
@@ -85,6 +74,17 @@ export default function TabOneScreen() {
       >
         Add to list
       </Button>
+      <Picker
+        selectedValue={selectedState}
+        onValueChange={(itemValue, itemIndex) => {
+          setSelectedState(itemIndex);
+          dispatch(updateState(statesList[itemIndex]));
+        }}
+      >
+        {statesList.map((state, index) => (
+          <Picker.Item key={index} label={state.name} value={index} />
+        ))}
+      </Picker>
       <View style={styles.separator} />
     </View>
   );

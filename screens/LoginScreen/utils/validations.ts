@@ -1,23 +1,22 @@
-// import { PASSWORD_COMPLEXITY } from 'Common/constants/defaultValues';
+export const PASSWORD_VALIDATION_ERROR = "Invalid Password :(";
 
-export const validateEmail = (email?: string) => {
-  const errors: string[] = [];
+const EMAIL_COMPLEXITY = "^S+@S+$";
+export const EMAIL_VALIDATION_ERROR = "Invalid email :(";
 
-  if (!email?.match("PASSWORD_COMPLEXITY"))
-    errors.push("Please enter a valid email address");
-
-  return errors;
+export const isValidEmail = (email?: string) => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
 };
 
-export const validatePassword = (password?: string) => {
-  const errors: string[] = [];
-
-  if (!password?.match("PASSWORD_COMPLEXITY"))
-    errors.push(
-      "Password needs to be more than 8 character with upper and lower case letter, a number and a symbol"
-    );
-
-  return errors;
+export const isValidPassword = (password: string) => {
+  if (password.length < 8) return false;
+  var hasUpperCase = /[A-Z]/.test(password);
+  var hasLowerCase = /[a-z]/.test(password);
+  var hasNumbers = /\d/.test(password);
+  var hasNonalphas = /\W/.test(password);
+  if (hasUpperCase && hasLowerCase && hasNumbers && hasNonalphas) {
+    return true;
+  } else return false;
 };
 
 export const safeEmail = (email: string) =>

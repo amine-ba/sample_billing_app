@@ -15,7 +15,7 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import { useSelector } from "react-redux";
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
-  const user = useSelector((state: any) => state.user);
+  const user = useSelector((state: any) => state.user.user);
   if (!user) return <LoginScreen />;
   return (
     <NavigationContainer

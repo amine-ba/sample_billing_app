@@ -9,4 +9,5 @@ export const commonStyles = StyleSheet.create({
   alignItemsCenter: { alignItems: "center" },
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
   fullWidth: { width: "100%" },
+  generalPadding: { paddingVertical: 10 },
 });
